@@ -1,10 +1,10 @@
 from logging import Logger
-from typing import Any, NamedTuple, Sequence, TypeAlias
+from typing import NamedTuple, Sequence
 
 import requests
 from requests import RequestException
 
-StrKeysDict: TypeAlias = dict[str, Any]
+from types import StrKeysDict
 
 
 class RestCountriesFieldNames(NamedTuple):
