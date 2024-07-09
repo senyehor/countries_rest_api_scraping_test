@@ -4,7 +4,7 @@ from typing import Any, NamedTuple, Sequence, TypeAlias
 import requests
 from requests import RequestException
 
-_StrKeysDict: TypeAlias = dict[str, Any]
+StrKeysDict: TypeAlias = dict[str, Any]
 
 
 class RestCountriesFieldNames(NamedTuple):
@@ -31,7 +31,7 @@ class RestCountriesScraper:
         cleaned_data = self.__clean_up_data(raw_data)
         return cleaned_data
 
-    def __clean_up_data(self, countries_data: list[_StrKeysDict]) -> list[_StrKeysDict]:
+    def __clean_up_data(self, countries_data: list[StrKeysDict]) -> list[StrKeysDict]:
         for specific_country_data in countries_data:
             self.__leave_single_capital(specific_country_data)
             self.__leave_only_official_name(specific_country_data)
@@ -43,7 +43,7 @@ class RestCountriesScraper:
                 self.__remove_svg_flag_link_and_rename_flags_key_to_flag_url(specific_country_data)
         return countries_data
 
-    def __query_data(self) -> list[_StrKeysDict]:
+    def __query_data(self) -> list[StrKeysDict]:
         result = requests.get(self.__compose_url_with_fields_filters())
         try:
             result.raise_for_status()
@@ -52,14 +52,14 @@ class RestCountriesScraper:
             raise
         return result.json()
 
-    def __remove_svg_flag_link_and_rename_flags_key_to_flag_url(self, country_data: _StrKeysDict):
+    def __remove_svg_flag_link_and_rename_flags_key_to_flag_url(self, country_data: StrKeysDict):
         country_data['flag'] = country_data['flags']['png']
         country_data.pop('flags')
 
-    def __leave_only_official_name(self, country_data: _StrKeysDict):
+    def __leave_only_official_name(self, country_data: StrKeysDict):
         country_data['name'] = country_data['name']['common']
 
-    def __leave_single_capital(self, country_data: _StrKeysDict):
+    def __leave_single_capital(self, country_data: StrKeysDict):
         """
         as very few countries has several capitals, leave only
         the first one to ensure keep data format consistent across countries
