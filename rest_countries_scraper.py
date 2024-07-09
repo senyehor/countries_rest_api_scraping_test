@@ -4,7 +4,7 @@ from typing import NamedTuple, Sequence
 import requests
 from requests import RequestException
 
-from types import StrKeysDict
+from typehints import StrKeysDict
 
 
 class RestCountriesFieldNames(NamedTuple):
@@ -53,7 +53,7 @@ class RestCountriesScraper:
         return result.json()
 
     def __remove_svg_flag_link_and_rename_flags_key_to_flag_url(self, country_data: StrKeysDict):
-        country_data['flag'] = country_data['flags']['png']
+        country_data['flag_link'] = country_data['flags']['png']
         country_data.pop('flags')
 
     def __leave_only_official_name(self, country_data: StrKeysDict):
